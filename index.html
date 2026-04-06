@@ -2,208 +2,169 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Pra Downloader | Blue Cyber</title>
-    <!-- Font Awesome 6 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pra Downloader</title>
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a2a, #050515, #000);
             min-height: 100vh;
-            background: linear-gradient(135deg, #0a0a2a 0%, #050515 50%, #000000 100%);
+            padding: 20px;
         }
 
-        /* Main Layout */
-        .app-container {
-            position: relative;
-            min-height: 100vh;
-            padding: 1.5rem;
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         /* Header */
         .header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 30px;
         }
 
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #00ffff, #0088ff);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            letter-spacing: -0.5px;
-        }
-
-        h1 i {
-            background: none;
+        .header h1 {
+            font-size: 2rem;
             color: #00ccff;
-            margin: 0 5px;
+            margin-bottom: 5px;
         }
 
-        .sub {
+        .header p {
             color: #88aaff;
             font-size: 0.85rem;
-            margin-top: 5px;
         }
 
-        /* Tab Navigation */
-        .tab-nav {
+        /* Tabs */
+        .tabs {
             display: flex;
+            gap: 8px;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            justify-content: center;
-            margin-bottom: 2rem;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 0.8rem;
-            border-radius: 60px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 255, 255, 0.2);
+            margin-bottom: 20px;
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 50px;
         }
 
-        .tab-btn {
-            background: rgba(10, 10, 30, 0.8);
-            border: 1px solid rgba(0, 255, 255, 0.2);
-            padding: 0.7rem 1.3rem;
-            border-radius: 40px;
-            font-weight: 500;
-            font-size: 0.85rem;
-            cursor: pointer;
+        .tab {
+            background: rgba(10,10,30,0.8);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
             color: #aaccff;
+            cursor: pointer;
+            font-size: 14px;
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: all 0.2s;
+            transition: 0.2s;
         }
 
-        .tab-btn i { font-size: 1rem; }
-
-        .tab-btn.active {
-            background: linear-gradient(135deg, #0066ff, #0099ff);
-            border-color: #00ccff;
-            box-shadow: 0 0 15px rgba(0, 150, 255, 0.3);
+        .tab.active {
+            background: #0066ff;
             color: white;
         }
 
-        .tab-btn:hover:not(.active) {
-            border-color: #00aaff;
-            background: rgba(0, 100, 255, 0.2);
+        .tab:hover:not(.active) {
+            background: rgba(0,100,255,0.3);
         }
 
-        /* Content Panels */
-        .tab-content {
+        /* Panel */
+        .panel {
             display: none;
-            background: rgba(5, 5, 15, 0.6);
-            backdrop-filter: blur(12px);
-            border-radius: 1.5rem;
-            padding: 1.5rem;
-            border: 1px solid rgba(0, 255, 255, 0.2);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 0.2s ease;
+            background: rgba(5,5,20,0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(0,150,255,0.3);
         }
 
-        .tab-content.active {
+        .panel.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Input Groups */
+        /* Form */
         .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin-bottom: 1.2rem;
+            margin-bottom: 15px;
         }
 
-        label {
+        .input-group label {
+            display: block;
             color: #88ccff;
-            font-weight: 500;
-            font-size: 0.85rem;
+            margin-bottom: 5px;
+            font-size: 13px;
         }
 
-        label i { margin-right: 6px; color: #00ccff; }
-
-        .input-wrapper {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        input, select {
-            flex: 1;
-            background: rgba(5, 5, 20, 0.9);
-            border: 1px solid #3388ff80;
-            padding: 0.8rem 1.2rem;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            color: #ffffff;
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid #3399ff;
+            border-radius: 30px;
+            color: white;
+            font-size: 14px;
             outline: none;
-            transition: all 0.2s;
         }
 
-        input:focus, select:focus {
-            border-color: #00aaff;
-            box-shadow: 0 0 10px rgba(0, 150, 255, 0.3);
-            background: #0a0a20;
+        .input-group input:focus {
+            border-color: #00ccff;
         }
 
         button {
-            background: linear-gradient(95deg, #0066ff, #0099ff);
+            background: #0066ff;
             border: none;
-            padding: 0 1.5rem;
-            border-radius: 40px;
-            font-weight: 500;
+            padding: 12px 25px;
+            border-radius: 30px;
             color: white;
+            font-weight: bold;
             cursor: pointer;
-            transition: 0.2s;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.9rem;
+            font-size: 14px;
+            transition: 0.2s;
         }
 
-        button:hover:not(:disabled) {
-            transform: scale(1.01);
-            box-shadow: 0 0 15px rgba(0, 100, 255, 0.4);
+        button:hover {
+            background: #0088ff;
+            transform: scale(1.02);
         }
 
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
+        .btn-green {
+            background: #00aa44;
         }
 
-        /* PREVIEW VIDEO CARD */
-        .video-preview-card {
-            margin-top: 1.5rem;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 1rem;
-            padding: 1.2rem;
-            border: 1px solid rgba(0, 150, 255, 0.3);
+        .btn-green:hover {
+            background: #00cc55;
         }
 
-        .preview-header {
+        /* Preview Card */
+        .preview-card {
+            margin-top: 20px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 15px;
+            padding: 15px;
+            border-left: 3px solid #00ccff;
+        }
+
+        .preview-flex {
             display: flex;
-            gap: 1rem;
+            gap: 15px;
             flex-wrap: wrap;
-            margin-bottom: 1rem;
         }
 
-        .preview-thumbnail {
-            width: 160px;
-            height: 160px;
+        .preview-img {
+            width: 120px;
+            height: 120px;
             object-fit: cover;
-            border-radius: 0.8rem;
+            border-radius: 10px;
             border: 1px solid #3399ff;
         }
 
@@ -212,134 +173,91 @@
         }
 
         .preview-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #ffffff;
-            margin-bottom: 0.5rem;
-        }
-
-        .preview-details {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin: 0.5rem 0;
-            color: #88aaff;
-            font-size: 0.8rem;
-        }
-
-        .preview-details i {
-            margin-right: 5px;
-            color: #33aaff;
-        }
-
-        .download-section {
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(0, 150, 255, 0.2);
-        }
-
-        .download-btn-large {
-            background: linear-gradient(95deg, #00aa44, #00cc66);
-            padding: 0.7rem 1.5rem;
-            font-size: 0.9rem;
-            gap: 10px;
-            display: inline-flex;
-            align-items: center;
-            text-decoration: none;
             color: white;
-            border-radius: 40px;
-            font-weight: 500;
-        }
-
-        .download-btn-large:hover {
-            box-shadow: 0 0 15px rgba(0, 200, 80, 0.4);
-            transform: scale(1.01);
-        }
-
-        .error-msg {
-            color: #ff8888;
-            background: rgba(255, 0, 0, 0.1);
-            padding: 0.8rem;
-            border-radius: 0.8rem;
-            border-left: 3px solid #ff5555;
-        }
-
-        .success-msg {
-            color: #88ffaa;
-            background: rgba(0, 255, 64, 0.1);
-            padding: 0.8rem;
-            border-radius: 0.8rem;
-            border-left: 3px solid #44ff88;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: #88aaff;
-        }
-
-        .loading i {
-            font-size: 1.5rem;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Result Items */
-        .result-card {
-            margin-top: 1rem;
-        }
-
-        .result-item {
-            background: rgba(10, 10, 24, 0.8);
-            border-radius: 0.8rem;
-            padding: 1rem;
-            margin-bottom: 0.8rem;
-            border: 1px solid rgba(0, 150, 255, 0.2);
-        }
-
-        .video-preview {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .video-info {
-            flex: 1;
-        }
-
-        .video-title {
-            font-weight: 500;
-            color: #ccddff;
+            font-weight: 600;
             margin-bottom: 5px;
-            font-size: 0.85rem;
         }
 
-        .video-stats {
-            font-size: 0.7rem;
-            color: #6699cc;
+        .preview-meta {
+            color: #88aaff;
+            font-size: 12px;
+            margin: 5px 0;
             display: flex;
-            gap: 12px;
+            gap: 15px;
             flex-wrap: wrap;
         }
 
         .download-link {
             display: inline-block;
-            background: #0066ff;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
+            margin-top: 10px;
+            background: #00aa44;
+            padding: 8px 20px;
+            border-radius: 30px;
             color: white;
             text-decoration: none;
-            font-size: 0.7rem;
-            margin-top: 6px;
+            font-size: 13px;
         }
 
-        /* FULLSCREEN AI CHAT MODAL */
-        .chat-modal {
+        .error {
+            color: #ff8888;
+            background: rgba(255,0,0,0.1);
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .success {
+            color: #88ffaa;
+            background: rgba(0,255,64,0.1);
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 30px;
+            color: #88aaff;
+        }
+
+        /* Result Item */
+        .result-item {
+            background: rgba(10,10,24,0.8);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .result-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .result-info {
+            flex: 1;
+        }
+
+        .result-title {
+            color: white;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .result-stats {
+            color: #88aaff;
+            font-size: 11px;
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Modal Chat */
+        .modal {
             display: none;
             position: fixed;
             top: 0;
@@ -347,436 +265,359 @@
             width: 100%;
             height: 100%;
             background: #0a0a1a;
-            z-index: 9999;
+            z-index: 1000;
         }
 
-        .chat-modal.active {
+        .modal.active {
             display: block;
         }
 
-        .chat-modal-container {
-            width: 100%;
+        .modal-container {
             height: 100%;
             display: flex;
             flex-direction: column;
-            background: rgba(5, 5, 20, 0.98);
         }
 
-        .chat-modal-header {
+        .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 1.5rem;
-            background: rgba(0, 0, 0, 0.5);
-            border-bottom: 1px solid rgba(0, 150, 255, 0.3);
+            padding: 15px 20px;
+            background: rgba(0,0,0,0.5);
+            border-bottom: 1px solid #3399ff;
         }
 
-        .chat-modal-header h2 {
-            color: #33aaff;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
+        .modal-header h3 {
+            color: #00ccff;
         }
 
-        .close-modal {
-            background: rgba(0, 100, 255, 0.2);
-            border: 1px solid #3399ff;
-            width: 40px;
-            height: 40px;
+        .close {
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
+            background: rgba(0,100,255,0.2);
+            border: none;
+            color: white;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: 0.2s;
         }
 
-        .close-modal:hover {
-            background: #3366ff;
-        }
-
-        .close-modal i {
-            font-size: 1.1rem;
-            color: #88ccff;
-        }
-
-        .chat-modal-messages {
+        .chat-messages {
             flex: 1;
             overflow-y: auto;
-            padding: 1.5rem;
+            padding: 20px;
         }
 
-        .chat-modal-input {
-            padding: 1rem 1.5rem;
-            background: rgba(0, 0, 0, 0.5);
-            border-top: 1px solid rgba(0, 150, 255, 0.3);
+        .chat-input-area {
+            padding: 15px;
+            background: rgba(0,0,0,0.5);
+            border-top: 1px solid #3399ff;
             display: flex;
-            gap: 12px;
+            gap: 10px;
         }
 
-        .chat-modal-input input {
+        .chat-input-area input {
             flex: 1;
-            background: rgba(10, 10, 25, 0.95);
-            border: 1px solid #3388ff80;
-            padding: 0.8rem 1rem;
-            border-radius: 40px;
-            font-size: 0.9rem;
+            padding: 12px;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid #3399ff;
+            border-radius: 30px;
             color: white;
+            outline: none;
         }
 
-        .chat-message {
-            padding: 0.7rem 1rem;
-            border-radius: 0.8rem;
-            margin-bottom: 0.8rem;
-            max-width: 85%;
+        .message {
+            padding: 10px 15px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            max-width: 80%;
         }
 
-        .chat-user {
-            background: rgba(0, 100, 255, 0.2);
+        .message-user {
+            background: rgba(0,100,255,0.2);
             margin-left: auto;
             text-align: right;
         }
 
-        .chat-ai {
-            background: rgba(0, 100, 255, 0.1);
+        .message-ai {
+            background: rgba(0,100,255,0.1);
             border-left: 2px solid #3399ff;
         }
 
-        .chat-message div:not(.chat-sender) {
-            color: #ffffff;
-        }
-
-        .chat-sender {
-            font-size: 0.7rem;
+        .message-sender {
+            font-size: 11px;
             color: #88aaff;
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            margin-bottom: 5px;
         }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0a0a1a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #3366ff;
-            border-radius: 10px;
+        .message-text {
+            color: white;
+            font-size: 14px;
         }
 
-        @media (max-width: 768px) {
-            .app-container { padding: 1rem; }
-            h1 { font-size: 1.8rem; }
-            .tab-btn { padding: 0.5rem 1rem; font-size: 0.75rem; }
-            .preview-thumbnail { width: 100px; height: 100px; }
-            .preview-title { font-size: 0.85rem; }
-            .chat-message { max-width: 95%; }
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .tab { padding: 8px 15px; font-size: 12px; }
+            .preview-img { width: 80px; height: 80px; }
         }
     </style>
 </head>
 <body>
-
-<div class="app-container">
+<div class="container">
     <div class="header">
-        <h1>
-            <i class="fa-solid fa-download"></i>
-            Pra Downloader
-            <i class="fa-regular fa-circle-check"></i>
-        </h1>
-        <div class="sub">Download • Search TikTok • Cek NIK • AI Chat</div>
+        <h1><i class="fa-solid fa-download"></i> Pra Downloader</h1>
+        <p>Download Instagram • TikTok • YouTube | Search TikTok | Cek NIK | AI Chat</p>
     </div>
 
-    <!-- Tab Navigation -->
-    <div class="tab-nav">
-        <button class="tab-btn active" data-tab="download"><i class="fa-solid fa-cloud-arrow-down"></i> Downloader</button>
-        <button class="tab-btn" data-tab="search"><i class="fa-brands fa-tiktok"></i> Search TikTok</button>
-        <button class="tab-btn" data-tab="nik"><i class="fa-regular fa-id-card"></i> Cek NIK</button>
-        <button class="tab-btn" data-tab="ai" id="openChatBtn"><i class="fa-regular fa-message"></i> AI Chat</button>
+    <div class="tabs">
+        <button class="tab active" data-tab="download"><i class="fa-solid fa-cloud-arrow-down"></i> Download</button>
+        <button class="tab" data-tab="search"><i class="fa-brands fa-tiktok"></i> Search</button>
+        <button class="tab" data-tab="nik"><i class="fa-regular fa-id-card"></i> Cek NIK</button>
+        <button class="tab" id="openChatBtn"><i class="fa-regular fa-message"></i> AI Chat</button>
     </div>
 
-    <!-- Tab Downloader -->
-    <div id="download-tab" class="tab-content active">
+    <!-- Panel Download -->
+    <div id="downloadPanel" class="panel active">
         <div class="input-group">
             <label><i class="fa-regular fa-link"></i> Platform</label>
-            <select id="downloadPlatform">
-                <option value="instagram">📸 Instagram</option>
-                <option value="tiktok">🎵 TikTok</option>
-                <option value="youtube">▶️ YouTube (MP4)</option>
+            <select id="platform">
+                <option value="instagram">Instagram</option>
+                <option value="tiktok">TikTok</option>
+                <option value="youtube">YouTube (MP4)</option>
             </select>
         </div>
         <div class="input-group">
             <label><i class="fa-regular fa-link"></i> URL</label>
-            <div class="input-wrapper">
-                <input type="text" id="downloadUrl" placeholder="Masukkan URL Instagram/TikTok/YouTube...">
-                <button id="downloadBtn"><i class="fa-solid fa-magnifying-glass"></i> Proses</button>
-            </div>
+            <input type="text" id="urlInput" placeholder="Masukkan URL...">
         </div>
+        <button id="processBtn"><i class="fa-solid fa-magnifying-glass"></i> Proses</button>
         <div id="downloadResult"></div>
     </div>
 
-    <!-- Tab Search TikTok -->
-    <div id="search-tab" class="tab-content">
+    <!-- Panel Search -->
+    <div id="searchPanel" class="panel">
         <div class="input-group">
-            <label><i class="fa-brands fa-tiktok"></i> Cari Video</label>
-            <div class="input-wrapper">
-                <input type="text" id="searchQuery" placeholder="Kata kunci...">
-                <button id="searchBtn"><i class="fa-solid fa-search"></i> Cari</button>
-            </div>
+            <label><i class="fa-brands fa-tiktok"></i> Cari Video TikTok</label>
+            <input type="text" id="searchInput" placeholder="Kata kunci...">
         </div>
+        <button id="searchBtn"><i class="fa-solid fa-search"></i> Cari</button>
         <div id="searchResult"></div>
     </div>
 
-    <!-- Tab Cek NIK -->
-    <div id="nik-tab" class="tab-content">
+    <!-- Panel NIK -->
+    <div id="nikPanel" class="panel">
         <div class="input-group">
             <label><i class="fa-regular fa-id-card"></i> NIK (16 digit)</label>
-            <div class="input-wrapper">
-                <input type="text" id="nikInput" placeholder="3201234567890001" maxlength="16">
-                <button id="nikBtn"><i class="fa-solid fa-check-circle"></i> Cek</button>
-            </div>
+            <input type="text" id="nikInput" placeholder="3201234567890001" maxlength="16">
         </div>
+        <button id="nikBtn"><i class="fa-solid fa-check-circle"></i> Cek NIK</button>
         <div id="nikResult"></div>
     </div>
 </div>
 
-<!-- AI CHAT MODAL -->
-<div id="chatModal" class="chat-modal">
-    <div class="chat-modal-container">
-        <div class="chat-modal-header">
-            <h2><i class="fa-regular fa-robot"></i> AI Chat</h2>
-            <div class="close-modal" id="closeModalBtn">
-                <i class="fa-solid fa-xmark"></i>
+<!-- Modal AI Chat -->
+<div id="chatModal" class="modal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3><i class="fa-regular fa-robot"></i> AI Chat</h3>
+            <button class="close" id="closeModalBtn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message message-ai">
+                <div class="message-sender"><i class="fa-regular fa-robot"></i> AI</div>
+                <div class="message-text">Halo! Ada yang bisa saya bantu?</div>
             </div>
         </div>
-        <div class="chat-modal-messages" id="chatModalMessages">
-            <div class="chat-message chat-ai">
-                <div class="chat-sender"><i class="fa-regular fa-robot"></i> AI</div>
-                <div>Halo! Ada yang bisa saya bantu?</div>
-            </div>
-        </div>
-        <div class="chat-modal-input">
-            <input type="text" id="chatModalInput" placeholder="Tanyakan sesuatu...">
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Tanyakan sesuatu...">
             <button id="sendChatBtn"><i class="fa-regular fa-paper-plane"></i> Kirim</button>
         </div>
     </div>
 </div>
 
 <script>
-    const API_BASE = "https://next-api-v1.vercel.app";
+    const API = "https://next-api-v1.vercel.app";
 
-    // TAB NAVIGATION
-    document.querySelectorAll('.tab-btn').forEach(btn => {
+    // TAB SWITCH
+    document.querySelectorAll('.tab').forEach(btn => {
+        if (btn.id === 'openChatBtn') return;
         btn.addEventListener('click', () => {
-            if (btn.id === 'openChatBtn') return;
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            const tabId = btn.dataset.tab;
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            document.getElementById(`${tabId}-tab`).classList.add('active');
+            const tab = btn.dataset.tab;
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            document.getElementById(tab + 'Panel').classList.add('active');
         });
     });
 
-    // AI CHAT MODAL
-    const chatModal = document.getElementById('chatModal');
-    const openChatBtn = document.getElementById('openChatBtn');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-
-    openChatBtn.addEventListener('click', () => {
-        chatModal.classList.add('active');
+    // MODAL CHAT
+    const modal = document.getElementById('chatModal');
+    document.getElementById('openChatBtn').onclick = () => {
+        modal.classList.add('active');
         document.body.style.overflow = 'hidden';
-    });
-
-    closeModalBtn.addEventListener('click', () => {
-        chatModal.classList.remove('active');
+    };
+    document.getElementById('closeModalBtn').onclick = () => {
+        modal.classList.remove('active');
         document.body.style.overflow = '';
-    });
-
+    };
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && chatModal.classList.contains('active')) {
-            chatModal.classList.remove('active');
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            modal.classList.remove('active');
             document.body.style.overflow = '';
         }
     });
 
     // AI CHAT
-    async function sendChatMessage() {
-        const input = document.getElementById('chatModalInput');
-        const message = input.value.trim();
-        const chatDiv = document.getElementById('chatModalMessages');
+    async function sendChat() {
+        const input = document.getElementById('chatInput');
+        const msg = input.value.trim();
+        if (!msg) return;
 
-        if (!message) return;
-
+        const chatDiv = document.getElementById('chatMessages');
+        
+        // User message
         chatDiv.innerHTML += `
-            <div class="chat-message chat-user">
-                <div class="chat-sender"><i class="fa-regular fa-user"></i> Anda</div>
-                <div>${escapeHtml(message)}</div>
+            <div class="message message-user">
+                <div class="message-sender"><i class="fa-regular fa-user"></i> Anda</div>
+                <div class="message-text">${escapeHtml(msg)}</div>
             </div>
         `;
         input.value = '';
         chatDiv.scrollTop = chatDiv.scrollHeight;
 
-        const loadingId = 'loading-' + Date.now();
+        // Loading
+        const loadId = 'load-' + Date.now();
         chatDiv.innerHTML += `
-            <div class="chat-message chat-ai" id="${loadingId}">
-                <div class="chat-sender"><i class="fa-regular fa-robot"></i> AI</div>
-                <div><i class="fa-solid fa-spinner fa-spin"></i> Mengetik...</div>
+            <div class="message message-ai" id="${loadId}">
+                <div class="message-sender"><i class="fa-regular fa-robot"></i> AI</div>
+                <div class="message-text"><i class="fa-solid fa-spinner fa-spin"></i> Mengetik...</div>
             </div>
         `;
         chatDiv.scrollTop = chatDiv.scrollHeight;
 
         try {
-            const res = await fetch(`${API_BASE}/ai/gpt4?prompt=${encodeURIComponent(message)}`);
+            const res = await fetch(`${API}/ai/gpt4?prompt=${encodeURIComponent(msg)}`);
             const data = await res.json();
-
-            document.getElementById(loadingId).remove();
+            document.getElementById(loadId).remove();
             
-            if (data.status === true && data.result) {
-                chatDiv.innerHTML += `
-                    <div class="chat-message chat-ai">
-                        <div class="chat-sender"><i class="fa-regular fa-robot"></i> AI</div>
-                        <div>${escapeHtml(data.result).replace(/\n/g, '<br>')}</div>
-                    </div>
-                `;
-            } else {
-                chatDiv.innerHTML += `
-                    <div class="chat-message chat-ai">
-                        <div class="chat-sender"><i class="fa-regular fa-robot"></i> AI</div>
-                        <div>Maaf, terjadi kesalahan.</div>
-                    </div>
-                `;
-            }
+            chatDiv.innerHTML += `
+                <div class="message message-ai">
+                    <div class="message-sender"><i class="fa-regular fa-robot"></i> AI</div>
+                    <div class="message-text">${escapeHtml(data.result || 'Maaf, error.')}</div>
+                </div>
+            `;
             chatDiv.scrollTop = chatDiv.scrollHeight;
         } catch (err) {
-            document.getElementById(loadingId).remove();
+            document.getElementById(loadId).remove();
             chatDiv.innerHTML += `
-                <div class="chat-message chat-ai">
-                    <div class="chat-sender"><i class="fa-regular fa-robot"></i> AI</div>
-                    <div>Error: ${err.message}</div>
+                <div class="message message-ai">
+                    <div class="message-sender"><i class="fa-regular fa-robot"></i> AI</div>
+                    <div class="message-text">Error: ${err.message}</div>
                 </div>
             `;
         }
     }
 
-    // DOWNLOADER
+    document.getElementById('sendChatBtn').onclick = sendChat;
+    document.getElementById('chatInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendChat();
+    });
+
+    // DOWNLOAD MEDIA
     async function downloadMedia() {
-        const platform = document.getElementById('downloadPlatform').value;
-        const url = document.getElementById('downloadUrl').value.trim();
+        const platform = document.getElementById('platform').value;
+        const url = document.getElementById('urlInput').value.trim();
         const resultDiv = document.getElementById('downloadResult');
 
         if (!url) {
-            resultDiv.innerHTML = `<div class="error-msg"><i class="fa-solid fa-triangle-exclamation"></i> Masukkan URL!</div>`;
+            resultDiv.innerHTML = '<div class="error">Masukkan URL!</div>';
             return;
         }
 
-        resultDiv.innerHTML = `<div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Memproses...</div>`;
+        resultDiv.innerHTML = '<div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Memproses...</div>';
 
         try {
             let endpoint = '';
-            if (platform === 'instagram') endpoint = `${API_BASE}/download/instagram?url=${encodeURIComponent(url)}`;
-            else if (platform === 'tiktok') endpoint = `${API_BASE}/download/tiktok?url=${encodeURIComponent(url)}`;
-            else if (platform === 'youtube') endpoint = `${API_BASE}/download/ytmp4?url=${encodeURIComponent(url)}`;
+            if (platform === 'instagram') endpoint = `${API}/download/instagram?url=${encodeURIComponent(url)}`;
+            else if (platform === 'tiktok') endpoint = `${API}/download/tiktok?url=${encodeURIComponent(url)}`;
+            else endpoint = `${API}/download/ytmp4?url=${encodeURIComponent(url)}`;
 
             const res = await fetch(endpoint);
             const data = await res.json();
 
-            if (data.status === true || data.status === 200) {
-                let downloadLink = data.download_url || data.link || data.result || data.url;
-                if (!downloadLink && data.data) downloadLink = data.data.download_url || data.data.link;
-                
-                let title = data.title || data.video_title || 'Video';
-                let thumbnail = data.thumbnail || data.cover || data.thumb || '';
-                let duration = data.duration || '';
-                let author = data.author || data.creator || 'Unknown';
-                
-                if (platform === 'tiktok' && data.result) {
-                    title = data.result.title || title;
-                    thumbnail = data.result.cover || thumbnail;
-                    duration = data.result.duration || duration;
-                    author = data.result.author?.nickname || author;
-                }
-                
-                if (downloadLink) {
-                    resultDiv.innerHTML = `
-                        <div class="video-preview-card">
-                            <div class="preview-header">
-                                ${thumbnail ? `<img class="preview-thumbnail" src="${thumbnail}" alt="thumbnail" onerror="this.style.display='none'">` : ''}
-                                <div class="preview-info">
-                                    <div class="preview-title">${escapeHtml(title)}</div>
-                                    <div class="preview-details">
-                                        <span><i class="fa-regular fa-user"></i> ${escapeHtml(author)}</span>
-                                        ${duration ? `<span><i class="fa-regular fa-clock"></i> ${duration} detik</span>` : ''}
-                                    </div>
-                                    <div class="preview-details">
-                                        <span><i class="fa-regular fa-circle-check"></i> ${platform.toUpperCase()}</span>
-                                    </div>
+            let downloadLink = data.download_url || data.link || data.result || data.url;
+            if (!downloadLink && data.data) downloadLink = data.data.download_url;
+            
+            let title = data.title || data.video_title || 'Video';
+            let thumbnail = data.thumbnail || data.cover || '';
+            let author = data.author || data.creator || '';
+
+            if (downloadLink) {
+                resultDiv.innerHTML = `
+                    <div class="preview-card">
+                        <div class="preview-flex">
+                            ${thumbnail ? `<img class="preview-img" src="${thumbnail}" onerror="this.style.display='none'">` : ''}
+                            <div class="preview-info">
+                                <div class="preview-title">${escapeHtml(title)}</div>
+                                <div class="preview-meta">
+                                    ${author ? `<span><i class="fa-regular fa-user"></i> ${escapeHtml(author)}</span>` : ''}
+                                    <span><i class="fa-regular fa-circle-check"></i> ${platform}</span>
                                 </div>
-                            </div>
-                            <div class="download-section">
-                                <a href="${downloadLink}" class="download-btn-large" target="_blank">
-                                    <i class="fa-solid fa-download"></i> Download
-                                </a>
-                                <p style="font-size:0.65rem; margin-top:8px; color:#88aaff; word-break:break-all;">${downloadLink}</p>
+                                <a href="${downloadLink}" class="download-link" target="_blank"><i class="fa-solid fa-download"></i> Download</a>
                             </div>
                         </div>
-                    `;
-                } else {
-                    resultDiv.innerHTML = `<div class="error-msg"><i class="fa-solid fa-bug"></i> Link tidak ditemukan.</div>`;
-                }
+                        <p style="font-size:11px; color:#88aaff; margin-top:10px; word-break:break-all;">${downloadLink}</p>
+                    </div>
+                `;
             } else {
-                resultDiv.innerHTML = `<div class="error-msg"><i class="fa-solid fa-circle-exclamation"></i> Gagal: ${data.message || 'Server error'}</div>`;
+                resultDiv.innerHTML = '<div class="error">Link tidak ditemukan</div>';
             }
         } catch (err) {
-            resultDiv.innerHTML = `<div class="error-msg"><i class="fa-solid fa-wifi"></i> Error: ${err.message}</div>`;
+            resultDiv.innerHTML = `<div class="error">Error: ${err.message}</div>`;
         }
     }
 
     // SEARCH TIKTOK
     async function searchTikTok() {
-        const query = document.getElementById('searchQuery').value.trim();
+        const query = document.getElementById('searchInput').value.trim();
         const resultDiv = document.getElementById('searchResult');
 
         if (!query) {
-            resultDiv.innerHTML = `<div class="error-msg">Masukkan kata kunci!</div>`;
+            resultDiv.innerHTML = '<div class="error">Masukkan kata kunci!</div>';
             return;
         }
 
-        resultDiv.innerHTML = `<div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Mencari...</div>`;
+        resultDiv.innerHTML = '<div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Mencari...</div>';
 
         try {
-            const res = await fetch(`${API_BASE}/search/tiktok?q=${encodeURIComponent(query)}`);
+            const res = await fetch(`${API}/search/tiktok?q=${encodeURIComponent(query)}`);
             const data = await res.json();
 
-            if (data.status === true && data.result && data.result.length > 0) {
-                let html = `<div class="result-card"><div class="success-msg">Ditemukan ${data.result.length} video</div>`;
-                for (let video of data.result.slice(0, 12)) {
+            if (data.status && data.result && data.result.length > 0) {
+                let html = '<div class="success">Ditemukan ' + data.result.length + ' video</div>';
+                for (let v of data.result.slice(0, 10)) {
                     html += `
                         <div class="result-item">
-                            <div class="video-preview">
-                                ${video.cover ? `<img src="${video.cover}" style="width:70px;height:70px;border-radius:8px;object-fit:cover;">` : ''}
-                                <div class="video-info">
-                                    <div class="video-title">${escapeHtml(video.title?.substring(0, 60) || 'No title')}</div>
-                                    <div class="video-stats">
-                                        <span><i class="fa-regular fa-heart"></i> ${formatNumber(video.digg_count)}</span>
-                                        <span><i class="fa-regular fa-clock"></i> ${video.duration}s</span>
-                                    </div>
-                                    ${video.play ? `<a href="${video.play}" class="download-link" target="_blank">Tonton</a>` : ''}
+                            ${v.cover ? `<img class="result-img" src="${v.cover}">` : ''}
+                            <div class="result-info">
+                                <div class="result-title">${escapeHtml(v.title?.substring(0, 60) || 'No title')}</div>
+                                <div class="result-stats">
+                                    <span><i class="fa-regular fa-heart"></i> ${formatNumber(v.digg_count)}</span>
+                                    <span><i class="fa-regular fa-clock"></i> ${v.duration}s</span>
                                 </div>
+                                ${v.play ? `<a href="${v.play}" class="download-link" target="_blank" style="margin-top:5px; display:inline-block;">Tonton</a>` : ''}
                             </div>
                         </div>
                     `;
                 }
-                html += `</div>`;
                 resultDiv.innerHTML = html;
             } else {
-                resultDiv.innerHTML = `<div class="error-msg">Tidak ada hasil</div>`;
+                resultDiv.innerHTML = '<div class="error">Tidak ada hasil</div>';
             }
         } catch (err) {
-            resultDiv.innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
+            resultDiv.innerHTML = `<div class="error">Error: ${err.message}</div>`;
         }
     }
 
@@ -786,41 +627,39 @@
         const resultDiv = document.getElementById('nikResult');
 
         if (!nik || nik.length < 16) {
-            resultDiv.innerHTML = `<div class="error-msg">Masukkan NIK 16 digit!</div>`;
+            resultDiv.innerHTML = '<div class="error">Masukkan NIK 16 digit!</div>';
             return;
         }
 
-        resultDiv.innerHTML = `<div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Mengecek...</div>`;
+        resultDiv.innerHTML = '<div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Mengecek...</div>';
 
         try {
-            const res = await fetch(`${API_BASE}/search/nik?q=${encodeURIComponent(nik)}`);
+            const res = await fetch(`${API}/search/nik?q=${encodeURIComponent(nik)}`);
             const data = await res.json();
 
-            if (data.status === true && data.result) {
+            if (data.status && data.result) {
                 resultDiv.innerHTML = `
-                    <div class="result-card">
-                        <div class="success-msg">Data Ditemukan</div>
-                        <pre style="background:#0a0a20; padding:0.8rem; border-radius:0.8rem; overflow-x:auto; font-size:0.7rem; border:1px solid #3399ff; color:#ccddff; margin-top:0.8rem;">${escapeHtml(JSON.stringify(data.result, null, 2))}</pre>
-                    </div>
+                    <div class="success">Data Ditemukan</div>
+                    <pre style="background:#0a0a20; padding:12px; border-radius:10px; overflow-x:auto; font-size:11px; color:#ccddff; margin-top:10px;">${escapeHtml(JSON.stringify(data.result, null, 2))}</pre>
                 `;
             } else {
-                resultDiv.innerHTML = `<div class="error-msg">NIK tidak ditemukan</div>`;
+                resultDiv.innerHTML = '<div class="error">NIK tidak ditemukan</div>';
             }
         } catch (err) {
-            resultDiv.innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
+            resultDiv.innerHTML = `<div class="error">Error: ${err.message}</div>`;
         }
     }
 
-    function formatNumber(num) {
-        if (!num) return '0';
-        if (num >= 1000000) return (num/1000000).toFixed(1) + 'M';
-        if (num >= 1000) return (num/1000).toFixed(1) + 'K';
-        return num.toString();
+    function formatNumber(n) {
+        if (!n) return '0';
+        if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
+        if (n >= 1000) return (n/1000).toFixed(1) + 'K';
+        return n.toString();
     }
 
     function escapeHtml(str) {
         if (!str) return '';
-        return String(str).replace(/[&<>]/g, (m) => {
+        return str.replace(/[&<>]/g, function(m) {
             if (m === '&') return '&amp;';
             if (m === '<') return '&lt;';
             if (m === '>') return '&gt;';
@@ -828,19 +667,15 @@
         });
     }
 
-    // Event listeners
-    document.getElementById('downloadBtn').addEventListener('click', downloadMedia);
-    document.getElementById('searchBtn').addEventListener('click', searchTikTok);
-    document.getElementById('nikBtn').addEventListener('click', cekNIK);
-    document.getElementById('sendChatBtn').addEventListener('click', sendChatMessage);
+    // Event Listeners
+    document.getElementById('processBtn').onclick = downloadMedia;
+    document.getElementById('searchBtn').onclick = searchTikTok;
+    document.getElementById('nikBtn').onclick = cekNIK;
     
-    document.getElementById('chatModalInput').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') sendChatMessage();
-    });
-    document.getElementById('downloadUrl').addEventListener('keypress', (e) => {
+    document.getElementById('urlInput').addEventListener('keypress', (e) => {
         if (e.key === 'Enter') downloadMedia();
     });
-    document.getElementById('searchQuery').addEventListener('keypress', (e) => {
+    document.getElementById('searchInput').addEventListener('keypress', (e) => {
         if (e.key === 'Enter') searchTikTok();
     });
     document.getElementById('nikInput').addEventListener('keypress', (e) => {
