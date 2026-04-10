@@ -3,713 +3,864 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Pry Tools - Deline API Downloader</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Payaa Tools · Ultimate AI Suite</title>
+    <link rel="icon" href="https://gangalink.vercel.app/i/bmpld198.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
+            background: radial-gradient(ellipse at 20% 30%, #0a0a14 0%, #000000 100%);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
             min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        /* ========== DARK MODE (HITAM) ========== */
-        body.dark {
-            background: linear-gradient(135deg, #0a0a0a 0%, #121212 100%);
-            color: #e2e8f0;
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255,180,71,0.08) 0%, transparent 70%);
+            pointer-events: none;
+            animation: pulseGlow 8s ease-in-out infinite;
+            z-index: 0;
         }
 
-        body.dark .card {
-            background: #1e1e2e;
-            border: 1px solid rgba(14, 165, 233, 0.2);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
         }
 
-        body.dark .card:hover {
-            background: #2a2a3e;
-            transform: translateY(-3px);
-        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #1a1a2a; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #ffb347; border-radius: 10px; }
 
-        body.dark .tab {
-            background: #1e1e2e;
-            color: #cbd5e1;
-            border: 1px solid #334155;
-        }
-
-        body.dark .tab.active {
-            background: #0ea5e9;
-            color: white;
-            border-color: #0ea5e9;
-        }
-
-        body.dark .result {
-            background: #0f0f1a;
-            border-left: 3px solid #0ea5e9;
-        }
-
-        body.dark .stat-card,
-        body.dark .logo {
-            background: #1e1e2e;
-            border: 1px solid #334155;
-        }
-
-        body.dark input, body.dark textarea {
-            background: #0f0f1a;
-            border-color: #334155;
-            color: #e2e8f0;
-        }
-
-        body.dark .badge {
-            background: #1e1e2e;
-            color: #0ea5e9;
-        }
-
-        body.dark footer {
-            background: rgba(30, 30, 46, 0.8);
-            color: #94a3b8;
-        }
-
-        body.dark .input-group label {
-            color: #94a3b8;
-        }
-
-        /* ========== LIGHT MODE (BIRU MUDA + PUTIH) ========== */
-        body.light {
-            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-            color: #0c4a6e;
-        }
-
-        body.light .card {
-            background: white;
-            border: 1px solid rgba(14, 165, 233, 0.2);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-
-        body.light .card:hover {
-            background: #f8fafc;
-            transform: translateY(-3px);
-        }
-
-        body.light .tab {
-            background: white;
-            color: #0c4a6e;
-            border: 1px solid #cbd5e1;
-        }
-
-        body.light .tab.active {
-            background: #0ea5e9;
-            color: white;
-            border-color: #0ea5e9;
-        }
-
-        body.light .result {
-            background: #f0f9ff;
-            border-left: 3px solid #0ea5e9;
-        }
-
-        body.light .stat-card,
-        body.light .logo {
-            background: white;
-        }
-
-        body.light .badge {
-            background: white;
-            color: #0284c7;
-        }
-
-        body.light footer {
-            background: rgba(255, 255, 255, 0.5);
-        }
-
-        body.light input, body.light textarea {
-            background: white;
-            border-color: #cbd5e1;
-            color: #0c4a6e;
-        }
-
-        .container {
-            max-width: 1400px;
+        .payaa-container {
+            max-width: 1450px;
             margin: 0 auto;
-            padding: 2rem 1rem;
+            background: rgba(8, 8, 16, 0.94);
+            backdrop-filter: blur(20px);
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 180, 71, 0.4);
+            box-shadow: 0 30px 50px rgba(0,0,0,0.6);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            animation: slideUp 0.6s ease-out;
         }
 
-        /* Header */
-        .header {
-            text-align: center;
-            margin-bottom: 3rem;
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .logo {
-            display: inline-flex;
+        .payaa-header {
+            display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 0.8rem 2rem;
-            border-radius: 80px;
-            box-shadow: 0 8px 20px rgba(0, 100, 200, 0.15);
-            margin-bottom: 1.5rem;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #050508dd, #0a0a12dd);
+            border-bottom: 2px solid #ffb347;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
-        .logo i {
-            font-size: 2rem;
-            color: #0ea5e9;
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
-
-        .logo h1 {
-            font-size: 1.9rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #0284c7, #38bdf8);
+        .logo-area img {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffb347;
+            box-shadow: 0 0 15px rgba(255,180,71,0.4);
+            transition: transform 0.3s ease;
+        }
+        .logo-area img:hover { transform: scale(1.05) rotate(5deg); }
+        .logo-area h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFE5B4, #FFB347, #FF8C00);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
-
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #0ea5e9;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .theme-toggle:hover {
-            transform: scale(1.05);
-        }
-
-        .badge {
-            padding: 0.4rem 1rem;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            display: inline-block;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-
-        .stats {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            border-radius: 20px;
-            padding: 0.5rem 1.5rem;
-            font-size: 0.85rem;
-        }
-
-        /* Tab Navigation */
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.6rem;
-            margin-bottom: 2rem;
-        }
-
-        .tab {
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 40px;
+        .logo-area p { font-size: 0.7rem; color: #ffdaaa; }
+        .version-badge {
+            background: linear-gradient(135deg, #1f1f2e, #2a2a3e);
+            border-radius: 60px;
+            padding: 6px 20px;
+            border: 1px solid #ffb347;
+            color: #ffdd99;
             font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        .tabs-wrapper {
+            background: #0c0c16;
+            border-bottom: 1px solid #2a2a3a;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            scrollbar-width: thin;
+            padding: 0 0.5rem;
+            display: flex;
+            flex-wrap: nowrap;
+        }
+        .tabs-wrapper::-webkit-scrollbar { height: 4px; }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 0.9rem 1.4rem;
             font-size: 0.85rem;
+            font-weight: 700;
+            color: #b0b0c0;
             cursor: pointer;
-            transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            font-family: inherit;
+            border-radius: 30px 30px 0 0;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .tab-btn i { font-size: 1rem; }
+        .tab-btn.active {
+            color: #ffdd99;
+            background: linear-gradient(to top, #1f1f30, #0c0c16);
+            border-bottom: 3px solid #ffb347;
+        }
+        .tab-pane {
+            display: none;
+            padding: 2rem;
+            animation: fadeInUp 0.4s ease;
+        }
+        .tab-pane.active { display: block; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .tab:hover:not(.active) {
-            opacity: 0.8;
+        .section-title {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 180, 71, 0.12);
+            border-radius: 40px;
+            padding: 5px 18px;
+            margin-bottom: 24px;
+            border: 0.5px solid #ffb34760;
+            color: #ffddbb;
+            font-size: 0.75rem;
+            font-weight: 600;
         }
-
-        /* Tool grid */
-        .tools-grid {
+        .grid-2 {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.8rem;
         }
-
         .card {
-            border-radius: 24px;
-            padding: 1.3rem;
-            transition: all 0.25s;
+            background: #0f0f1a;
+            border-radius: 28px;
+            border: 1px solid #2a2a3e;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
-
-        .card-header {
+        .card:hover { border-color: #ffb34780; transform: translateY(-5px); }
+        .card h3 {
+            font-size: 1.2rem;
+            color: #ffe0b5;
+            margin-bottom: 18px;
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 1rem;
-            padding-bottom: 0.7rem;
-            border-bottom: 2px solid #0ea5e9;
+            border-left: 3px solid #ffb347;
+            padding-left: 12px;
         }
-
-        .card-header i {
-            font-size: 1.5rem;
-            color: #0ea5e9;
-        }
-
-        .card-header h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-        }
-
-        .card-desc {
-            font-size: 0.75rem;
-            opacity: 0.8;
-            margin-bottom: 1rem;
-            line-height: 1.4;
-        }
-
-        .input-group {
+        .input-row {
             display: flex;
-            flex-direction: column;
-            gap: 6px;
-            margin: 0.8rem 0;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 14px 0;
         }
-
-        .input-group label {
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .input-group input,
-        .input-group textarea {
-            padding: 10px 14px;
-            border-radius: 16px;
-            border: 1.5px solid;
-            font-family: 'Inter', monospace;
-            font-size: 0.8rem;
-            transition: 0.2s;
-        }
-
-        .input-group input:focus,
-        .input-group textarea:focus {
+        .input-row input, .file-input {
+            flex: 1;
+            background: #171724;
+            border: 1px solid #3a3a50;
+            border-radius: 60px;
+            padding: 12px 18px;
+            color: #fff;
+            font-size: 0.85rem;
             outline: none;
-            border-color: #0ea5e9;
-            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
         }
-
-        button {
-            background: #0ea5e9;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 40px;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            transition: 0.2s;
+        .input-row input:focus { border-color: #ffb347; }
+        .btn {
+            padding: 10px 22px;
+            border-radius: 60px;
+            font-weight: 700;
             font-size: 0.8rem;
+            cursor: pointer;
+            border: none;
+            background: #25253a;
+            color: #f0f0f5;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            justify-content: center;
-            width: 100%;
-            margin-top: 8px;
+            transition: all 0.2s;
         }
-
-        button:hover {
-            background: #0284c7;
-            transform: scale(0.98);
+        .btn-primary {
+            background: linear-gradient(105deg, #1e1e30, #2a2a42);
+            border: 1px solid #ffb34780;
+            color: #ffe0aa;
         }
-
-        .result {
-            border-radius: 16px;
-            padding: 12px;
-            margin-top: 12px;
-            font-size: 0.7rem;
-            word-break: break-word;
-            max-height: 400px;
-            overflow-y: auto;
-            display: none;
+        .btn-primary:hover { background: #35354f; border-color: #ffb347; transform: scale(0.97); }
+        .btn-danger {
+            background: #3a1e2a;
+            border: 1px solid #ff6b6b80;
+            color: #ffbbaa;
         }
-
-        .video-container {
-            margin: 12px 0;
-            padding: 12px;
-            background: rgba(14, 165, 233, 0.08);
-            border-radius: 16px;
+        .result-box {
+            margin-top: 18px;
+            background: #05050c80;
+            border-radius: 20px;
+            padding: 14px;
+            border: 1px solid #2a2a3a;
         }
-
-        .video-container video {
-            width: 100%;
-            max-height: 260px;
-            border-radius: 12px;
-            margin-bottom: 10px;
-        }
-
-        .download-link {
-            background: #10b981;
-            color: white;
+        .status-text {
+            background: #00000070;
+            border-radius: 60px;
             padding: 8px 16px;
-            border-radius: 40px;
-            text-decoration: none;
-            display: inline-block;
             font-size: 0.75rem;
-            font-weight: 600;
-            text-align: center;
-            width: 100%;
+            margin-top: 12px;
+            color: #ccccee;
         }
-
-        .download-link:hover {
-            background: #059669;
+        .loading {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-
-        .loader {
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            border: 2px solid #fff;
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,200,100,0.2);
+            border-top: 2px solid #ffb347;
             border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 0.6s linear infinite;
+            animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .hidden { display: none; }
+
+        .question {
+            background: #1a1a28;
+            border-radius: 20px;
+            padding: 18px;
+            margin: 12px 0;
+            color: #fff5e6;
+            font-size: 1rem;
+        }
+        .answer-row {
+            display: flex;
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .answer-row input {
+            flex: 2;
+            background: #202030;
+            border: 1px solid #ffb34780;
+            border-radius: 60px;
+            padding: 12px 18px;
+            color: white;
+        }
+        .score {
+            font-weight: bold;
+            color: #ffda88;
+            font-size: 1rem;
+            margin: 12px 0;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .chat-container {
+            background: #0a0a12;
+            border-radius: 28px;
+            overflow: hidden;
+            border: 1px solid #2a2a3e;
+            margin-top: 10px;
         }
-
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 22px;
+            background: linear-gradient(135deg, #12121e, #0c0c16);
+            border-bottom: 1px solid #ffb34740;
+        }
+        .chat-avatar {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(145deg, #2a2438, #1e1a2e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border: 2px solid #ffb347;
+        }
+        .chat-info h4 { font-size: 1.2rem; color: #ffe0b5; }
+        .chat-info p { font-size: 0.7rem; color: #ffb347aa; }
+        .chat-messages {
+            min-height: 380px;
+            max-height: 450px;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background: #06060c;
+        }
+        .bubble {
+            display: flex;
+            flex-direction: column;
+            max-width: 80%;
+            animation: slideIn 0.2s ease;
+        }
+        .bubble.user { align-self: flex-end; }
+        .bubble.ai { align-self: flex-start; }
+        .bubble-name {
+            font-size: 0.65rem;
+            margin-bottom: 4px;
+            margin-left: 12px;
+            color: #ffbc7a;
+            font-weight: 500;
+        }
+        .bubble-text {
+            padding: 12px 18px;
+            border-radius: 22px;
+            font-size: 0.9rem;
+            line-height: 1.45;
+            word-break: break-word;
+        }
+        .user .bubble-text {
+            background: linear-gradient(135deg, #2a2a3e, #1f1f30);
+            border-bottom-right-radius: 6px;
+            color: #f5f5f5;
+            border: 1px solid #ffb34740;
+        }
+        .ai .bubble-text {
+            background: #12121e;
+            border-bottom-left-radius: 6px;
+            color: #ffefcf;
+            border-left: 3px solid #ffb347;
+        }
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 16px;
+            background: #12121e;
+            border-radius: 30px;
+            width: fit-content;
+        }
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #ffb347;
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite;
+        }
+        .typing-dot:nth-child(1) { animation-delay: 0s; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-6px); opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .chat-input-area {
+            display: flex;
+            gap: 12px;
+            padding: 18px 22px;
+            background: #0c0c16;
+            border-top: 1px solid #2a2a3a;
+        }
+        .chat-input-area input {
+            flex: 1;
+            background: #171724;
+            border: 1px solid #3a3a50;
+            border-radius: 60px;
+            padding: 14px 20px;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .clear-chat {
+            background: #2a1f2a;
+            border: none;
+            color: #ffaa99;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            margin-left: auto;
+        }
         footer {
+            font-size: 0.65rem;
             text-align: center;
-            margin-top: 3rem;
-            padding: 1.5rem;
-            border-radius: 40px;
-            font-size: 0.75rem;
+            padding: 1rem;
+            background: #05050acc;
+            color: #8a8aa0;
+            border-top: 1px solid #2a2a38;
         }
-
-        @media (max-width: 700px) {
-            .tools-grid {
-                grid-template-columns: 1fr;
-            }
-            .tab {
-                padding: 0.4rem 0.9rem;
-                font-size: 0.7rem;
-            }
+        @media (max-width: 760px) {
+            .tab-pane { padding: 1.2rem; }
+            .payaa-header { flex-direction: column; align-items: flex-start; }
+            .bubble { max-width: 95%; }
         }
     </style>
 </head>
-<body class="dark">
-    <button class="theme-toggle" id="themeToggle">
-        <i class="fas fa-moon"></i>
-    </button>
-
-    <div class="container">
-        <div class="header">
-            <div class="logo">
-                <i class="fas fa-tools"></i>
-                <h1>Pry Tools</h1>
-            </div>
-            <div class="badge">
-                <i class="fas fa-key"></i> API Key: agasamel • <i class="fas fa-charging-station"></i> 150 req/hari
-            </div>
-            <div class="stats">
-                <div class="stat-card"><i class="fas fa-check-circle"></i> 10+ Platform</div>
-                <div class="stat-card"><i class="fas fa-bolt"></i> Real-time</div>
-                <div class="stat-card"><i class="fas fa-shield-alt"></i> Free Access</div>
-            </div>
+<body>
+<div class="payaa-container">
+    <div class="payaa-header">
+        <div class="logo-area">
+            <img src="https://gangalink.vercel.app/i/bmpld198.jpg" alt="Payaa">
+            <div><h1>Payaa Tools</h1><p><i class="fas fa-bolt"></i> Ultimate AI Suite · 10+ Fitur Premium</p></div>
         </div>
-
-        <div class="tabs" id="tabContainer"></div>
-        <div class="tools-grid" id="toolsContainer"></div>
-        <footer>
-            <i class="fas fa-cloud-download-alt"></i> Pry Tools • Powered by Deline API • Klik <i class="fas fa-adjust"></i> di pojok kanan untuk ganti tema
-        </footer>
+        <div class="version-badge"><i class="fas fa-crown"></i> Payaa AI v7.0 · Ultimate Edition</div>
     </div>
 
-    <script>
-        const BASE_API = 'https://api.deline.web.id';
-        const API_KEY = 'agasamel';
+    <div class="tabs-wrapper">
+        <button class="tab-btn active" data-tab="downloader"><i class="fas fa-download"></i> Downloader</button>
+        <button class="tab-btn" data-tab="game"><i class="fas fa-gamepad"></i> Game Zone</button>
+        <button class="tab-btn" data-tab="stalker"><i class="fas fa-user-secret"></i> Stalker</button>
+        <button class="tab-btn" data-tab="hitamkan"><i class="fas fa-moon"></i> Hitamkan</button>
+        <button class="tab-btn" data-tab="komik"><i class="fas fa-book-open"></i> Jadi Komik</button>
+        <button class="tab-btn" data-tab="ryoai"><i class="fas fa-guitar"></i> Ryo AI</button>
+        <button class="tab-btn" data-tab="hyperai"><i class="fas fa-brain"></i> Hyper AI</button>
+        <button class="tab-btn" data-tab="copilot"><i class="fas fa-robot"></i> CoPilot</button>
+        <button class="tab-btn" data-tab="openai"><i class="fas fa-microchip"></i> OpenAI</button>
+        <button class="tab-btn" data-tab="fakecall"><i class="fas fa-phone-alt"></i> Fake Call</button>
+        <button class="tab-btn" data-tab="spammer"><i class="fas fa-bomb"></i> NGL Spammer</button>
+    </div>
 
-        // Daftar downloader dengan ikon Font Awesome
-        const downloaders = [
-            { 
-                id: 'ig', 
-                name: 'Instagram Downloader', 
-                category: 'instagram',
-                icon: 'fab fa-instagram',
-                desc: 'Download video, foto, reels, dan story Instagram', 
-                fields: [{ name: 'url', label: 'URL Instagram', type: 'text', placeholder: 'https://www.instagram.com/p/Cxample123/' }], 
-                endpoint: '/downloader/ig', 
-                params: ['url']
-            },
-            { 
-                id: 'instagram', 
-                name: 'Instagram (Alternatif)', 
-                category: 'instagram',
-                icon: 'fab fa-instagram',
-                desc: 'Downloader Instagram versi alternatif', 
-                fields: [{ name: 'url', label: 'URL Instagram', type: 'text', placeholder: 'https://instagram.com/p/Cxample123/' }], 
-                endpoint: '/downloader/instagram', 
-                params: ['url']
-            },
-            { 
-                id: 'tiktok', 
-                name: 'TikTok Downloader', 
-                category: 'tiktok',
-                icon: 'fab fa-tiktok',
-                desc: 'Download video TikTok tanpa watermark', 
-                fields: [{ name: 'url', label: 'URL TikTok', type: 'text', placeholder: 'https://www.tiktok.com/@username/video/123456789' }], 
-                endpoint: '/downloader/tiktok', 
-                params: ['url']
-            },
-            { 
-                id: 'youtube', 
-                name: 'YouTube Downloader', 
-                category: 'youtube',
-                icon: 'fab fa-youtube',
-                desc: 'Download video atau audio YouTube', 
-                fields: [{ name: 'url', label: 'URL YouTube', type: 'text', placeholder: 'https://youtube.com/watch?v=dQw4w9WgXcQ' }], 
-                endpoint: '/downloader/youtube', 
-                params: ['url']
-            },
-            { 
-                id: 'ytmp3', 
-                name: 'YouTube MP3', 
-                category: 'youtube',
-                icon: 'fab fa-youtube',
-                desc: 'Download audio YouTube (format MP3)', 
-                fields: [{ name: 'url', label: 'URL YouTube', type: 'text', placeholder: 'https://youtube.com/watch?v=dQw4w9WgXcQ' }], 
-                endpoint: '/downloader/ytmp3', 
-                params: ['url']
-            },
-            { 
-                id: 'facebook', 
-                name: 'Facebook Downloader', 
-                category: 'sosmed',
-                icon: 'fab fa-facebook',
-                desc: 'Download video Facebook', 
-                fields: [{ name: 'url', label: 'URL Facebook', type: 'text', placeholder: 'https://fb.watch/xxxxx/' }], 
-                endpoint: '/downloader/facebook', 
-                params: ['url']
-            },
-            { 
-                id: 'twitter', 
-                name: 'Twitter Downloader', 
-                category: 'sosmed',
-                icon: 'fab fa-twitter',
-                desc: 'Download video dari Twitter / X', 
-                fields: [{ name: 'url', label: 'URL Tweet', type: 'text', placeholder: 'https://twitter.com/user/status/123456789' }], 
-                endpoint: '/downloader/twitter', 
-                params: ['url']
-            }
-        ];
+    <!-- DOWNLOADER -->
+    <div id="downloader" class="tab-pane active">
+        <div class="section-title"><i class="fas fa-globe"></i> Premium Downloader</div>
+        <div class="grid-2">
+            <div class="card"><h3><i class="fab fa-instagram"></i> Instagram</h3><div class="input-row"><input type="text" id="igUrl" placeholder="URL Instagram"><button class="btn btn-primary" id="downloadIgBtn"><i class="fas fa-download"></i> Ambil</button></div><div id="igResult" class="result-box hidden"></div><div id="igStatus" class="status-text">📌 Masukkan link Instagram</div></div>
+            <div class="card"><h3><i class="fab fa-tiktok"></i> TikTok</h3><div class="input-row"><input type="text" id="ttUrl" placeholder="URL TikTok"><button class="btn btn-primary" id="downloadTtBtn"><i class="fas fa-download"></i> Ambil</button></div><div id="ttResult" class="result-box hidden"></div><div id="ttStatus" class="status-text">📌 Masukkan link TikTok</div></div>
+            <div class="card"><h3><i class="fas fa-cloud-upload-alt"></i> Terabox</h3><div class="input-row"><input type="text" id="tbUrl" placeholder="URL Terabox"><button class="btn btn-primary" id="downloadTbBtn"><i class="fas fa-download"></i> Ambil</button></div><div id="tbResult" class="result-box hidden"></div><div id="tbStatus" class="status-text">📌 Masukkan link Terabox</div></div>
+        </div>
+    </div>
 
-        const categories = [
-            { id: 'all', name: 'Semua Platform', icon: 'fas fa-th-large' },
-            { id: 'instagram', name: 'Instagram', icon: 'fab fa-instagram' },
-            { id: 'tiktok', name: 'TikTok', icon: 'fab fa-tiktok' },
-            { id: 'youtube', name: 'YouTube', icon: 'fab fa-youtube' },
-            { id: 'sosmed', name: 'Media Sosial', icon: 'fas fa-share-alt' }
-        ];
+    <!-- GAME ZONE -->
+    <div id="game" class="tab-pane">
+        <div class="section-title"><i class="fas fa-keyboard"></i> Game Asah Otak & Tebak Hero ML</div>
+        <div class="grid-2">
+            <div class="card"><h3><i class="fas fa-lightbulb"></i> Asah Otak</h3><button class="btn btn-primary" id="startAsahBtn"><i class="fas fa-play"></i> Mulai Game</button><div id="asahQuestionBox" class="question hidden"></div><div id="asahAnswerArea" class="answer-row hidden"><input type="text" id="asahAnswerInput" placeholder="Ketik jawaban..."><button class="btn btn-primary" id="asahSubmitBtn"><i class="fas fa-check"></i> Jawab</button></div><div class="score" id="asahScoreDisplay">Skor: 0</div><div id="asahGameStatus" class="status-text">Klik Mulai untuk bermain</div></div>
+            <div class="card"><h3><i class="fas fa-skull-crossbones"></i> Tebak Hero ML</h3><button class="btn btn-primary" id="startHeroBtn"><i class="fas fa-play"></i> Mulai Game</button><div id="heroQuestionBox" class="question hidden"></div><div id="heroAnswerArea" class="answer-row hidden"><input type="text" id="heroAnswerInput" placeholder="Nama hero..."><button class="btn btn-primary" id="heroSubmitBtn"><i class="fas fa-check"></i> Jawab</button></div><div class="score" id="heroScoreDisplay">Skor: 0</div><div id="heroGameStatus" class="status-text">Klik Mulai untuk bermain</div></div>
+        </div>
+    </div>
 
-        let activeCategory = 'all';
+    <!-- STALKER (DIPERBAIKI) -->
+    <div id="stalker" class="tab-pane">
+        <div class="section-title"><i class="fas fa-search"></i> Stalker Profil Instagram & TikTok</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3><i class="fab fa-instagram"></i> Instagram Stalk</h3>
+                <div class="input-row">
+                    <input type="text" id="igStalkUser" placeholder="Username (tanpa @)">
+                    <button class="btn btn-primary" id="stalkIgBtn"><i class="fas fa-user-search"></i> Stalk</button>
+                </div>
+                <div id="igStalkResult" class="result-box hidden"></div>
+                <div id="igStalkStatus" class="status-text">Masukkan username Instagram, contoh: boccchi</div>
+            </div>
+            <div class="card">
+                <h3><i class="fab fa-tiktok"></i> TikTok Stalk</h3>
+                <div class="input-row">
+                    <input type="text" id="ttStalkUser" placeholder="Username TikTok">
+                    <button class="btn btn-primary" id="stalkTtBtn"><i class="fas fa-user-search"></i> Stalk</button>
+                </div>
+                <div id="ttStalkResult" class="result-box hidden"></div>
+                <div id="ttStalkStatus" class="status-text">Masukkan username TikTok, contoh: bts.official</div>
+            </div>
+        </div>
+    </div>
 
-        // Theme Toggle
-        const themeToggle = document.getElementById('themeToggle');
-        let isDark = true;
+    <!-- HITAMKAN & KOMIK -->
+    <div id="hitamkan" class="tab-pane"><div class="section-title"><i class="fas fa-droplet"></i> AI Hitamkan</div><div class="card"><h3><i class="fas fa-image"></i> Upload Gambar</h3><div class="input-row"><input type="file" id="hitamFileInput" accept="image/*" class="file-input"><button class="btn btn-primary" id="hitamProcessBtn"><i class="fas fa-skull"></i> Proses</button></div><div id="hitamStatusMsg" class="status-text">Pilih gambar, klik proses</div><div id="hitamResultBox" class="result-box hidden"><img id="hitamResultImg" style="max-width:100%; border-radius:20px;"></div></div></div>
+    <div id="komik" class="tab-pane"><div class="section-title"><i class="fas fa-manga"></i> AI Manga Panel</div><div class="card"><h3><i class="fas fa-layer-group"></i> Konversi ke Manga</h3><div class="input-row"><input type="file" id="komikFileInput" accept="image/*" class="file-input"><button class="btn btn-primary" id="komikProcessBtn"><i class="fas fa-book"></i> Jadi Komik</button></div><div id="komikStatusMsg" class="status-text">Upload gambar, AI akan ubah ke manga</div><div id="komikResultBox" class="result-box hidden"><img id="komikResultImg" style="max-width:100%; border-radius:20px;"></div></div></div>
 
-        themeToggle.addEventListener('click', () => {
-            if (isDark) {
-                document.body.classList.remove('dark');
-                document.body.classList.add('light');
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                isDark = false;
-            } else {
-                document.body.classList.remove('light');
-                document.body.classList.add('dark');
-                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-                isDark = true;
-            }
+    <!-- AI CHATS -->
+    <div id="ryoai" class="tab-pane"><div class="chat-container"><div class="chat-header"><div class="chat-avatar"><i class="fas fa-guitar"></i></div><div class="chat-info"><h4>Ryo Yamada</h4><p>Online · Bocchi AI</p></div><button class="clear-chat" id="clearRyoBtn"><i class="fas fa-trash-alt"></i> Bersihkan</button></div><div class="chat-messages" id="ryoMessages"><div class="bubble ai"><span class="bubble-name"><i class="fas fa-guitar"></i> Ryo</span><div class="bubble-text">Hai, gue Ryo. Ada yang bisa dibantu? Santai aja.</div></div></div><div class="chat-input-area"><input type="text" id="ryoInput" placeholder="Ketik pesan..."><button class="btn btn-primary" id="sendRyoBtn"><i class="fas fa-paper-plane"></i> Kirim</button></div></div><div id="ryoStatus" class="status-text">Ryo siap membantu</div></div>
+    <div id="hyperai" class="tab-pane"><div class="chat-container"><div class="chat-header"><div class="chat-avatar"><i class="fas fa-brain"></i></div><div class="chat-info"><h4>Hyper AI</h4><p>Mode Genit</p></div><button class="clear-chat" id="clearHyperBtn"><i class="fas fa-trash-alt"></i> Bersihkan</button></div><div class="chat-messages" id="hyperMessages"><div class="bubble ai"><span class="bubble-name"><i class="fas fa-brain"></i> Hyper AI</span><div class="bubble-text">Hai... mau ngobrol seru? 😏🔥</div></div></div><div class="chat-input-area"><input type="text" id="hyperInput" placeholder="Ketik pesan..."><button class="btn btn-primary" id="sendHyperBtn"><i class="fas fa-paper-plane"></i> Kirim</button></div></div><div id="hyperStatus" class="status-text">Hyper AI siap</div></div>
+    <div id="copilot" class="tab-pane"><div class="chat-container"><div class="chat-header"><div class="chat-avatar"><i class="fas fa-robot"></i></div><div class="chat-info"><h4>CoPilot AI</h4><p>Asisten Cerdas</p></div><button class="clear-chat" id="clearCopilotBtn"><i class="fas fa-trash-alt"></i> Bersihkan</button></div><div class="chat-messages" id="copilotMessages"><div class="bubble ai"><span class="bubble-name"><i class="fas fa-robot"></i> CoPilot</span><div class="bubble-text">Halo! Saya CoPilot AI, ada yang bisa dibantu?</div></div></div><div class="chat-input-area"><input type="text" id="copilotInput" placeholder="Ketik pesan..."><button class="btn btn-primary" id="sendCopilotBtn"><i class="fas fa-paper-plane"></i> Kirim</button></div></div><div id="copilotStatus" class="status-text">CoPilot siap</div></div>
+    <div id="openai" class="tab-pane"><div class="chat-container"><div class="chat-header"><div class="chat-avatar"><i class="fas fa-microchip"></i></div><div class="chat-info"><h4>OpenAI</h4><p>GPT Powered</p></div><button class="clear-chat" id="clearOpenaiBtn"><i class="fas fa-trash-alt"></i> Bersihkan</button></div><div class="chat-messages" id="openaiMessages"><div class="bubble ai"><span class="bubble-name"><i class="fas fa-microchip"></i> OpenAI</span><div class="bubble-text">Halo! Ada yang bisa saya bantu?</div></div></div><div class="chat-input-area"><input type="text" id="openaiInput" placeholder="Ketik pesan..."><button class="btn btn-primary" id="sendOpenaiBtn"><i class="fas fa-paper-plane"></i> Kirim</button></div></div><div id="openaiStatus" class="status-text">OpenAI siap</div></div>
+
+    <!-- FAKE CALL -->
+    <div id="fakecall" class="tab-pane">
+        <div class="section-title"><i class="fas fa-phone-volume"></i> Generator Fake Call</div>
+        <div class="card"><h3><i class="fas fa-phone"></i> Buat Fake Call</h3><div class="input-row"><input type="text" id="fakeNameInput" placeholder="Nama / Kontak"><input type="text" id="fakeDurasiInput" placeholder="Durasi (02:34)"><input type="text" id="fakeAvatarUrlInput" placeholder="URL Avatar (opsional)"></div><button class="btn btn-primary" id="generateFakeCallBtn"><i class="fas fa-phone-alt"></i> Generate Sekarang</button><div id="fakeCallStatusMsg" class="status-text">Isi nama, durasi, avatar (bisa kosong pakai default)</div><div id="fakeCallResultBox" class="result-box hidden"><img id="fakeCallResultImg" style="max-width:100%; border-radius:20px;"><div class="status-text">Klik kanan simpan gambar</div></div></div>
+    </div>
+
+    <!-- NGL SPAMMER -->
+    <div id="spammer" class="tab-pane">
+        <div class="section-title"><i class="fas fa-bomb"></i> NGL Spammer</div>
+        <div class="card"><h3><i class="fas fa-paper-plane"></i> NGL Spammer Tools</h3><div class="input-row"><input type="text" id="nglUsername" placeholder="Username NGL"><input type="number" id="nglAmount" placeholder="Jumlah spam" value="10" min="1" max="100"></div><div class="input-row"><input type="text" id="nglMessage" placeholder="Pesan spam (random jika kosong)"></div><div class="input-row"><button class="btn btn-primary" id="startSpamBtn"><i class="fas fa-play"></i> Mulai Spam</button><button class="btn btn-danger" id="stopSpamBtn" disabled><i class="fas fa-stop"></i> Stop</button></div><div id="spamProgress" class="result-box hidden"><div id="spamLog" class="status-text">Memulai spam...</div><div id="spamCounter" class="status-text">Terkirim: 0 / 0</div></div><div id="spamStatusMsg" class="status-text"><i class="fas fa-info-circle"></i> Masukkan username NGL dan jumlah spam.</div></div>
+    </div>
+    <footer><i class="far fa-copyright"></i> Payaa Tools Ultimate · All APIs Operational</footer>
+</div>
+
+<script>
+    async function fetchJson(url) {
+        try {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 15000);
+            const res = await fetch(url, { signal: controller.signal });
+            clearTimeout(timeout);
+            if (!res.ok) throw new Error();
+            return await res.json();
+        } catch(e) { return null; }
+    }
+    function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, function(m) { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }); }
+
+    // Tab Switching
+    const tabs = document.querySelectorAll('.tab-btn');
+    const panes = document.querySelectorAll('.tab-pane');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = tab.getAttribute('data-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            panes.forEach(p => p.classList.remove('active'));
+            document.getElementById(target).classList.add('active');
         });
+    });
 
-        function renderTabs() {
-            const container = document.getElementById('tabContainer');
-            container.innerHTML = '';
-            categories.forEach(cat => {
-                const btn = document.createElement('button');
-                btn.className = `tab ${activeCategory === cat.id ? 'active' : ''}`;
-                btn.innerHTML = `<i class="${cat.icon}"></i> ${cat.name}`;
-                btn.onclick = () => {
-                    activeCategory = cat.id;
-                    renderTabs();
-                    renderTools();
-                };
-                container.appendChild(btn);
-            });
+    // DOWNLOADER
+    document.getElementById('downloadIgBtn')?.addEventListener('click', async () => {
+        let url = document.getElementById('igUrl').value.trim();
+        if (!url) return;
+        let status = document.getElementById('igStatus'), result = document.getElementById('igResult');
+        status.innerHTML = '<div class="loading"><div class="spinner"></div> Mengambil...</div>';
+        let json = await fetchJson(`https://api.deline.web.id/downloader/ig?url=${encodeURIComponent(url)}`);
+        if (json?.status && json?.data?.url) {
+            result.classList.remove('hidden');
+            result.innerHTML = `<video controls src="${json.data.url}" style="max-width:100%; border-radius:18px;"></video><br><a href="${json.data.url}" download class="btn btn-primary" style="margin-top:10px;"><i class="fas fa-save"></i> Simpan</a>`;
+            status.innerHTML = '✅ Sukses!';
+        } else { status.innerHTML = '❌ Gagal.'; result.classList.add('hidden'); }
+    });
+    document.getElementById('downloadTtBtn')?.addEventListener('click', async () => {
+        let url = document.getElementById('ttUrl').value.trim();
+        if (!url) return;
+        let status = document.getElementById('ttStatus'), result = document.getElementById('ttResult');
+        status.innerHTML = '<div class="loading"><div class="spinner"></div> Memproses...</div>';
+        let json = await fetchJson(`https://api.deline.web.id/downloader/tiktok?url=${encodeURIComponent(url)}`);
+        if (json?.status && json?.data?.nowm) {
+            result.classList.remove('hidden');
+            result.innerHTML = `<video controls src="${json.data.nowm}" style="max-width:100%; border-radius:18px;"></video><br><a href="${json.data.nowm}" download class="btn btn-primary"><i class="fas fa-save"></i> Simpan</a>`;
+            status.innerHTML = '✅ Berhasil!';
+        } else { status.innerHTML = '❌ Gagal.'; result.classList.add('hidden'); }
+    });
+    document.getElementById('downloadTbBtn')?.addEventListener('click', async () => {
+        let url = document.getElementById('tbUrl').value.trim();
+        if (!url) return;
+        let status = document.getElementById('tbStatus'), result = document.getElementById('tbResult');
+        status.innerHTML = '<div class="loading"><div class="spinner"></div> Mengambil...</div>';
+        let json = await fetchJson(`https://api.deline.web.id/downloader/terabox?url=${encodeURIComponent(url)}`);
+        if (json?.status && json?.data?.direct_link) {
+            result.classList.remove('hidden');
+            result.innerHTML = `<a href="${json.data.direct_link}" target="_blank" class="btn btn-primary"><i class="fas fa-external-link-alt"></i> Buka / Download</a>`;
+            status.innerHTML = '✅ Sukses!';
+        } else { status.innerHTML = '❌ Gagal.'; result.classList.add('hidden'); }
+    });
+
+    // GAME ASAH OTAK
+    let currentAsah = null, asahScore = 0;
+    window.loadAsah = async () => {
+        let status = document.getElementById('asahGameStatus');
+        status.innerHTML = '<div class="loading"><div class="spinner"></div> Memuat soal...</div>';
+        let json = await fetchJson('https://api.deline.web.id/game/asahotak');
+        if (json?.status && json?.data) {
+            currentAsah = json.data;
+            document.getElementById('asahQuestionBox').innerHTML = `<strong>❓ ${currentAsah.soal}</strong>`;
+            document.getElementById('asahQuestionBox').classList.remove('hidden');
+            document.getElementById('asahAnswerArea').classList.remove('hidden');
+            status.innerHTML = 'Ketik jawabanmu!';
+        } else { status.innerHTML = '❌ Gagal memuat soal.'; }
+    };
+    window.checkAsah = () => {
+        if (!currentAsah) return;
+        let jawab = document.getElementById('asahAnswerInput').value.trim().toLowerCase();
+        if (jawab === currentAsah.jawaban.toLowerCase()) {
+            asahScore++;
+            document.getElementById('asahScoreDisplay').innerText = `Skor: ${asahScore}`;
+            document.getElementById('asahGameStatus').innerHTML = '✅ Benar! Soal berikutnya...';
+            window.loadAsah();
+            document.getElementById('asahAnswerInput').value = '';
+        } else {
+            document.getElementById('asahGameStatus').innerHTML = `❌ Salah! Jawaban: ${currentAsah.jawaban}. Skor direset.`;
+            asahScore = 0;
+            document.getElementById('asahScoreDisplay').innerText = 'Skor: 0';
+            window.loadAsah();
+            document.getElementById('asahAnswerInput').value = '';
         }
+    };
+    document.getElementById('startAsahBtn')?.addEventListener('click', () => { asahScore = 0; document.getElementById('asahScoreDisplay').innerText = 'Skor: 0'; window.loadAsah(); });
+    document.getElementById('asahSubmitBtn')?.addEventListener('click', window.checkAsah);
+    document.getElementById('asahAnswerInput')?.addEventListener('keypress', e => { if (e.key === 'Enter') window.checkAsah(); });
 
-        async function callAPI(tool, values) {
-            const params = new URLSearchParams();
-            params.append('apikey', API_KEY);
-            
-            for (let p of tool.params) {
-                let val = values[p] || '';
-                if (val.trim() === '') {
-                    return { error: true, message: `URL tidak boleh kosong!` };
-                }
-                params.append(p, val);
-            }
-            
-            const url = `${BASE_API}${tool.endpoint}?${params.toString()}`;
-            console.log('Request:', url);
-            
+    // GAME TEBAK HERO
+    let currentHero = null, heroScore = 0;
+    window.loadHero = async () => {
+        let status = document.getElementById('heroGameStatus');
+        status.innerHTML = '<div class="loading"><div class="spinner"></div> Memuat hero...</div>';
+        let json = await fetchJson('https://api.deline.web.id/game/tebakheroml');
+        if (json?.status && json?.data) {
+            currentHero = json.data;
+            let imgHtml = currentHero.img ? `<img src="${currentHero.img}" style="width:80px; border-radius:16px; margin-bottom:10px;">` : '';
+            document.getElementById('heroQuestionBox').innerHTML = `${imgHtml}<strong>🎭 Siapa hero ini?</strong>`;
+            document.getElementById('heroQuestionBox').classList.remove('hidden');
+            document.getElementById('heroAnswerArea').classList.remove('hidden');
+            status.innerHTML = 'Ketik nama hero!';
+        } else { status.innerHTML = '❌ Gagal memuat soal.'; }
+    };
+    window.checkHero = () => {
+        if (!currentHero) return;
+        let jawab = document.getElementById('heroAnswerInput').value.trim().toLowerCase();
+        if (jawab === currentHero.jawaban.toLowerCase()) {
+            heroScore++;
+            document.getElementById('heroScoreDisplay').innerText = `Skor: ${heroScore}`;
+            document.getElementById('heroGameStatus').innerHTML = '✅ Benar! Hero berikutnya...';
+            window.loadHero();
+            document.getElementById('heroAnswerInput').value = '';
+        } else {
+            document.getElementById('heroGameStatus').innerHTML = `❌ Salah! Jawaban: ${currentHero.jawaban}. Skor direset.`;
+            heroScore = 0;
+            document.getElementById('heroScoreDisplay').innerText = 'Skor: 0';
+            window.loadHero();
+            document.getElementById('heroAnswerInput').value = '';
+        }
+    };
+    document.getElementById('startHeroBtn')?.addEventListener('click', () => { heroScore = 0; document.getElementById('heroScoreDisplay').innerText = 'Skor: 0'; window.loadHero(); });
+    document.getElementById('heroSubmitBtn')?.addEventListener('click', window.checkHero);
+    document.getElementById('heroAnswerInput')?.addEventListener('keypress', e => { if (e.key === 'Enter') window.checkHero(); });
+
+    // STALKER IG (DIPERBAIKI - menggunakan endpoint yang lebih stabil)
+    document.getElementById('stalkIgBtn')?.addEventListener('click', async () => {
+        let user = document.getElementById('igStalkUser').value.trim();
+        if (!user) {
+            document.getElementById('igStalkStatus').innerHTML = '❌ Masukkan username Instagram!';
+            return;
+        }
+        let status = document.getElementById('igStalkStatus');
+        let result = document.getElementById('igStalkResult');
+        status.innerHTML = '<div class="loading"><div class="spinner"></div> Mengambil data Instagram...</div>';
+        
+        // Gunakan endpoint alternatif yang lebih stabil
+        let json = await fetchJson(`https://api.deline.web.id/stalker/igstalk?username=${encodeURIComponent(user)}`);
+        
+        if (json?.status && json?.data) {
+            let data = json.data;
+            result.classList.remove('hidden');
+            result.innerHTML = `
+                <div style="text-align:center;">
+                    <img src="${data.profile_pic || 'https://via.placeholder.com/100'}" style="width:80px; height:80px; border-radius:50%; object-fit:cover; border:2px solid #ffb347;">
+                    <h4 style="color:#ffdd99; margin-top:10px;">${data.full_name || data.username}</h4>
+                    <p><i class="fab fa-instagram"></i> @${data.username}</p>
+                    <p><i class="fas fa-file-alt"></i> Bio: ${data.bio || '-'}</p>
+                    <p><i class="fas fa-users"></i> Followers: ${data.followers || 0} | Following: ${data.following || 0}</p>
+                    <p><i class="fas fa-image"></i> Postingan: ${data.media_count || 0}</p>
+                    ${data.is_private ? '<p><i class="fas fa-lock"></i> Akun Private</p>' : '<p><i class="fas fa-globe"></i> Akun Public</p>'}
+                </div>
+            `;
+            status.innerHTML = '✅ Berhasil mengambil data!';
+        } else {
+            status.innerHTML = '❌ Gagal mengambil data. Coba username lain atau cek koneksi.';
+            result.classList.add('hidden');
+        }
+    });
+
+    // STALKER TT (DIPERBAIKI)
+    document.getElementById('stalkTtBtn')?.addEventListener('click', async () => {
+        let user = document.getElementById('ttStalkUser').value.trim();
+        if (!user) {
+            document.getElementById('ttStalkStatus').innerHTML = '❌ Masukkan username TikTok!';
+            return;
+        }
+        let status = document.getElementById('ttStalkStatus');
+        let result = document.getElementById('ttStalkResult');
+        status.innerHTML = '<div class="loading"><div class="spinner"></div> Mengambil data TikTok...</div>';
+        
+        let json = await fetchJson(`https://api.deline.web.id/stalker/ttstalk?username=${encodeURIComponent(user)}`);
+        
+        if (json?.status && json?.data) {
+            let data = json.data;
+            result.classList.remove('hidden');
+            result.innerHTML = `
+                <div style="text-align:center;">
+                    <img src="${data.avatar || 'https://via.placeholder.com/100'}" style="width:80px; height:80px; border-radius:50%; object-fit:cover; border:2px solid #ffb347;">
+                    <h4 style="color:#ffdd99; margin-top:10px;">${data.nickname || data.username}</h4>
+                    <p><i class="fab fa-tiktok"></i> @${data.unique_id || data.username}</p>
+                    <p><i class="fas fa-file-alt"></i> Bio: ${data.signature || '-'}</p>
+                    <p><i class="fas fa-users"></i> Followers: ${data.follower_count || 0} | Following: ${data.following_count || 0}</p>
+                    <p><i class="fas fa-heart"></i> Total Likes: ${data.heart || 0}</p>
+                    <p><i class="fas fa-video"></i> Video: ${data.video_count || 0}</p>
+                </div>
+            `;
+            status.innerHTML = '✅ Berhasil mengambil data!';
+        } else {
+            status.innerHTML = '❌ Gagal mengambil data. Coba username lain atau cek koneksi.';
+            result.classList.add('hidden');
+        }
+    });
+
+    // NEXRAY AI
+    async function callNexray(file, prompt, statusEl, imgEl, resultContainer) {
+        statusEl.innerHTML = '<div class="loading"><div class="spinner"></div> AI memproses...</div>';
+        const fd = new FormData(); fd.append('image', file); fd.append('param', prompt);
+        try {
+            const res = await fetch('https://api.nexray.web.id/ai/nanobanana', { method: 'POST', body: fd });
+            if (!res.ok) throw new Error();
+            const blob = await res.blob();
+            imgEl.src = URL.createObjectURL(blob);
+            resultContainer.classList.remove('hidden');
+            statusEl.innerHTML = '✅ Berhasil!';
+        } catch(e) { statusEl.innerHTML = '❌ Error API.'; }
+    }
+    let hitamFile = null; document.getElementById('hitamFileInput')?.addEventListener('change', e => { hitamFile = e.target.files[0]; document.getElementById('hitamStatusMsg').innerHTML = '✅ Gambar siap.'; });
+    document.getElementById('hitamProcessBtn')?.addEventListener('click', () => { if(hitamFile) callNexray(hitamFile, 'Hitamkan warna kulit karakter ini menjadi hitam pekat, hanya kulit saja', document.getElementById('hitamStatusMsg'), document.getElementById('hitamResultImg'), document.getElementById('hitamResultBox')); else document.getElementById('hitamStatusMsg').innerHTML = 'Pilih gambar dulu.'; });
+    let komikFile = null; document.getElementById('komikFileInput')?.addEventListener('change', e => { komikFile = e.target.files[0]; document.getElementById('komikStatusMsg').innerHTML = '✅ Gambar siap.'; });
+    document.getElementById('komikProcessBtn')?.addEventListener('click', () => { if(komikFile) callNexray(komikFile, 'buat gambar ini menjadi panel manga, buat beberapa panel dan ubah karakternya menjadi anime tanpa bubble text', document.getElementById('komikStatusMsg'), document.getElementById('komikResultImg'), document.getElementById('komikResultBox')); else document.getElementById('komikStatusMsg').innerHTML = 'Upload gambar dulu.'; });
+
+    // FAKE CALL
+    document.getElementById('generateFakeCallBtn')?.addEventListener('click', async () => {
+        let nama = document.getElementById('fakeNameInput').value.trim();
+        let durasi = document.getElementById('fakeDurasiInput').value.trim();
+        let avatar = document.getElementById('fakeAvatarUrlInput').value.trim();
+        let status = document.getElementById('fakeCallStatusMsg');
+        let resultBox = document.getElementById('fakeCallResultBox');
+        let resultImg = document.getElementById('fakeCallResultImg');
+        
+        if (!nama || !durasi) { status.innerHTML = '❌ Nama dan durasi harus diisi!'; return; }
+        if (!avatar) avatar = 'https://gangalink.vercel.app/i/bmpld198.jpg';
+        
+        status.innerHTML = '<div class="loading"><div class="spinner"></div> Membuat fake call...</div>';
+        try {
+            const apiUrl = `https://api.cuki.biz.id/api/canvas/fakecall?apikey=cuki-x&nama=${encodeURIComponent(nama)}&durasi=${encodeURIComponent(durasi)}&avatar=${encodeURIComponent(avatar)}`;
+            const response = await fetch(apiUrl);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const blob = await response.blob();
+            resultImg.src = URL.createObjectURL(blob);
+            resultBox.classList.remove('hidden');
+            status.innerHTML = '✅ Fake call berhasil dibuat! Klik kanan untuk simpan.';
+        } catch (error) {
+            status.innerHTML = '❌ Gagal membuat fake call. Coba lagi nanti.';
+        }
+    });
+
+    // NGL SPAMMER
+    let spamActive = false, spamCount = 0, totalSpam = 0;
+    const randomMsgs = ["Halo bro!", "Gercep banget", "Woy woy", "Cie pamer", "Mantap", "Gaskeun", "Hadeh", "Pede banget", "Jawab dong", "Spam Payaa", "Keren", "Anjayyy", "Mabar yuk", "Top markotop"];
+    async function sendNGL(username, msg) {
+        try {
+            const res = await fetch(`https://api-faa.my.id/faa/ngl-spam?username=${encodeURIComponent(username)}&message=${encodeURIComponent(msg)}`);
+            const data = await res.json();
+            return data?.status === true || data?.success === true;
+        } catch(e) { return false; }
+    }
+    async function runSpam() {
+        const username = document.getElementById('nglUsername').value.trim();
+        let amount = parseInt(document.getElementById('nglAmount').value) || 10;
+        if (!username) { document.getElementById('spamLog').innerHTML = '❌ Username tidak boleh kosong!'; return; }
+        if (amount > 200) amount = 200;
+        totalSpam = amount; spamCount = 0; spamActive = true;
+        document.getElementById('startSpamBtn').disabled = true;
+        document.getElementById('stopSpamBtn').disabled = false;
+        document.getElementById('spamProgress').classList.remove('hidden');
+        document.getElementById('spamLog').innerHTML = '🚀 Memulai spam...';
+        document.getElementById('spamCounter').innerHTML = `Terkirim: 0 / ${totalSpam}`;
+        for (let i = 0; i < totalSpam && spamActive; i++) {
+            let message = document.getElementById('nglMessage').value.trim() || randomMsgs[Math.floor(Math.random() * randomMsgs.length)];
+            const customMsg = `${message} [${i+1}]`;
+            const success = await sendNGL(username, customMsg);
+            if (success) { spamCount++; document.getElementById('spamCounter').innerHTML = `Terkirim: ${spamCount} / ${totalSpam}`; document.getElementById('spamLog').innerHTML = `✅ Berhasil (${spamCount}/${totalSpam})`; }
+            else { document.getElementById('spamLog').innerHTML = `⚠️ Gagal, melanjutkan...`; }
+            if (spamActive && i < totalSpam - 1) await new Promise(r => setTimeout(r, 800));
+        }
+        if (spamActive) document.getElementById('spamLog').innerHTML = `🎉 Selesai! Terkirim: ${spamCount} dari ${totalSpam}`;
+        else document.getElementById('spamLog').innerHTML = `⛔ Dihentikan. Terkirim: ${spamCount} dari ${totalSpam}`;
+        document.getElementById('startSpamBtn').disabled = false;
+        document.getElementById('stopSpamBtn').disabled = true;
+    }
+    document.getElementById('startSpamBtn')?.addEventListener('click', runSpam);
+    document.getElementById('stopSpamBtn')?.addEventListener('click', () => { spamActive = false; });
+
+    // AI CHAT FUNCTIONS
+    function createAIChat(id, apiUrl, prompt = '', welcomeMsg = '') {
+        const messagesDiv = document.getElementById(`${id}Messages`);
+        const inputEl = document.getElementById(`${id}Input`);
+        const sendBtn = document.getElementById(`send${id}Btn`);
+        const clearBtn = document.getElementById(`clear${id}Btn`);
+        const statusEl = document.getElementById(`${id}Status`);
+        
+        const addMsg = (text, isUser) => {
+            const bubble = document.createElement('div');
+            bubble.className = `bubble ${isUser ? 'user' : 'ai'}`;
+            let icon = '';
+            if (id === 'ryo') icon = '<i class="fas fa-guitar"></i> Ryo';
+            else if (id === 'hyper') icon = '<i class="fas fa-brain"></i> Hyper AI';
+            else if (id === 'copilot') icon = '<i class="fas fa-robot"></i> CoPilot';
+            else icon = '<i class="fas fa-microchip"></i> OpenAI';
+            bubble.innerHTML = `<span class="bubble-name">${isUser ? '<i class="fas fa-user"></i> Kamu' : icon}</span><div class="bubble-text">${escapeHtml(text)}</div>`;
+            messagesDiv.appendChild(bubble);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        };
+        
+        const getReply = async (msg) => {
             try {
-                const response = await fetch(url);
-                const json = await response.json();
-                return json;
-            } catch (err) {
-                return { error: true, message: `Gagal: ${err.message}` };
-            }
-        }
-
-        function formatResult(data) {
-            if (data.error === true || data.status === false) {
-                return `<div style="color: #ef4444;"><i class="fas fa-exclamation-triangle"></i> Gagal: ${data.message || data.error || 'Terjadi kesalahan'}</div>`;
-            }
-            
-            let html = '';
-            let videoUrls = [];
-            let imageUrls = [];
-            
-            // Ekstrak URL dari berbagai struktur response
-            if (data.result?.media?.videos) {
-                videoUrls = data.result.media.videos;
-            }
-            if (data.result?.media?.images) {
-                imageUrls = data.result.media.images;
-            }
-            if (data.result?.videos) videoUrls = [...videoUrls, ...data.result.videos];
-            if (data.result?.video_url) videoUrls.push(data.result.video_url);
-            if (data.result?.download_url) videoUrls.push(data.result.download_url);
-            if (data.download_url) videoUrls.push(data.download_url);
-            if (data.url) videoUrls.push(data.url);
-            if (data.video_url) videoUrls.push(data.video_url);
-            
-            // Hapus duplikat
-            videoUrls = [...new Set(videoUrls)];
-            imageUrls = [...new Set(imageUrls)];
-            
-            // Tampilkan gambar
-            if (imageUrls.length > 0) {
-                imageUrls.forEach(img => {
-                    html += `
-                        <div class="video-container">
-                            <img src="${img}" style="width:100%; border-radius:12px;">
-                            <a href="${img}" target="_blank" class="download-link" style="margin-top:10px; display:block;">
-                                <i class="fas fa-download"></i> Download Gambar
-                            </a>
-                        </div>
-                    `;
-                });
-            }
-            
-            // Tampilkan video
-            if (videoUrls.length > 0) {
-                videoUrls.forEach((url, idx) => {
-                    html += `
-                        <div class="video-container">
-                            <video controls preload="metadata">
-                                <source src="${url}" type="video/mp4">
-                                Browser tidak support video tag.
-                            </video>
-                            <a href="${url}" target="_blank" class="download-link">
-                                <i class="fas fa-download"></i> Download Video ${videoUrls.length > 1 ? idx + 1 : ''}
-                            </a>
-                        </div>
-                    `;
-                });
-            }
-            
-            // Jika tidak ada media yang ditemukan, tampilkan JSON
-            if (videoUrls.length === 0 && imageUrls.length === 0) {
-                html = `<pre style="white-space: pre-wrap; font-family: monospace; font-size: 0.7rem;">${JSON.stringify(data, null, 2)}</pre>`;
-            }
-            
-            return html;
-        }
-
-        function getFilteredTools() {
-            if (activeCategory === 'all') return downloaders;
-            return downloaders.filter(t => t.category === activeCategory);
-        }
-
-        function renderTools() {
-            const container = document.getElementById('toolsContainer');
-            const filtered = getFilteredTools();
-            
-            if (filtered.length === 0) {
-                container.innerHTML = '<div style="text-align:center; padding:3rem;">Tidak ada downloader di kategori ini</div>';
-                return;
-            }
-            
-            container.innerHTML = '';
-            
-            filtered.forEach(tool => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                
-                let inputsHtml = '';
-                tool.fields.forEach(f => {
-                    inputsHtml += `
-                        <div class="input-group">
-                            <label><i class="fas fa-link"></i> ${f.label}</label>
-                            <input type="${f.type}" id="${tool.id}_${f.name}" placeholder="${f.placeholder}">
-                        </div>
-                    `;
-                });
-                
-                card.innerHTML = `
-                    <div class="card-header">
-                        <i class="${tool.icon}"></i>
-                        <h3>${tool.name}</h3>
-                    </div>
-                    <div class="card-desc">${tool.desc}</div>
-                    ${inputsHtml}
-                    <button id="btn_${tool.id}"><i class="fas fa-download"></i> Download</button>
-                    <div id="res_${tool.id}" class="result"></div>
-                `;
-                
-                container.appendChild(card);
-                
-                const btn = document.getElementById(`btn_${tool.id}`);
-                btn.addEventListener('click', async () => {
-                    const resultDiv = document.getElementById(`res_${tool.id}`);
-                    resultDiv.style.display = 'block';
-                    resultDiv.innerHTML = '<span class="loader"></span> Memproses download...';
-                    
-                    const values = {};
-                    tool.fields.forEach(f => {
-                        const el = document.getElementById(`${tool.id}_${f.name}`);
-                        if (el) values[f.name] = el.value;
-                    });
-                    
-                    const response = await callAPI(tool, values);
-                    resultDiv.innerHTML = formatResult(response);
-                });
-            });
-        }
-
-        renderTabs();
-        renderTools();
-    </script>
+                let url = apiUrl + encodeURIComponent(msg);
+                if (prompt) url += `&prompt=${encodeURIComponent(prompt)}`;
+                const res = await fetch(url);
+                if (!res.ok) throw new Error();
+                const data = await res.json();
+                return data?.result || data?.response || "Maaf, saya tidak bisa menjawab.";
+            } catch(e) { return "Error, coba lagi nanti."; }
+        };
+        
+        const send = async () => {
+            const msg = inputEl.value.trim();
+            if (!msg) return;
+            addMsg(msg, true);
+            inputEl.value = '';
+            statusEl.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Mengetik...';
+            const reply = await getReply(msg);
+            addMsg(reply, false);
+            statusEl.innerHTML = '<i class="fas fa-check-circle"></i> Merespon.';
+            setTimeout(() => statusEl.innerHTML = `<i class="fas fa-info-circle"></i> ${id === 'ryo' ? 'Ryo' : id === 'hyper' ? 'Hyper AI' : id === 'copilot' ? 'CoPilot' : 'OpenAI'} siap membantu.`, 2500);
+        };
+        
+        sendBtn?.addEventListener('click', send);
+        inputEl?.addEventListener('keypress', e => { if (e.key === 'Enter') send(); });
+        clearBtn?.addEventListener('click', () => {
+            messagesDiv.innerHTML = '';
+            addMsg(welcomeMsg, false);
+        });
+    }
+    
+    createAIChat('ryo', 'https://api.deline.web.id/ai/openai?text=', 'Kamu Ryo Yamada dari Bocchi the Rock. Cuek, santai, sarkas, peduli. Jawab singkat bahasa Indonesia santai.', 'Hai, gue Ryo. Ada yang bisa dibantu? Santai aja.');
+    createAIChat('hyper', 'https://api-faa.my.id/faa/ai-hyper?text=', '', 'Hai... kamu mau ngobrol seru? Awas aja, aku agak genit nih 😏🔥');
+    createAIChat('copilot', 'https://api.deline.web.id/ai/copilot?text=', '', 'Halo! Saya CoPilot AI, asisten cerdas siap membantu Anda.');
+    createAIChat('openai', 'https://api.deline.web.id/ai/openai?text=', '', 'Halo! Saya adalah model AI canggih. Ada yang bisa saya bantu hari ini?');
+</script>
 </body>
 </html>
